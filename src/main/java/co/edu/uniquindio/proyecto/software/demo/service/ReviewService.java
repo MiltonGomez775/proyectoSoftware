@@ -5,6 +5,8 @@ import co.edu.uniquindio.proyecto.software.demo.model.Review;
 import co.edu.uniquindio.proyecto.software.demo.repository.BookRepository;
 import co.edu.uniquindio.proyecto.software.demo.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -28,6 +30,10 @@ public class ReviewService {
             throw new IllegalArgumentException("El bookId es obligatorio");
         }
 
+        if (dto.getRating() < 1 || dto.getRating() > 5) {
+        throw new IllegalArgumentException("El rating debe estar entre 1 y 5");
+    }
+
         // Verificar que el libro exista antes de crear la review
         bookRepository.findById(dto.getBookId())
                 .orElseThrow(() -> new IllegalArgumentException("El libro con id " + dto.getBookId() + " no existe"));
@@ -36,4 +42,6 @@ public class ReviewService {
         Review review = new Review(dto.getBookId(), dto.getComment(), dto.getRating());
         return reviewRepository.save(review);
     }
+
+   
 }

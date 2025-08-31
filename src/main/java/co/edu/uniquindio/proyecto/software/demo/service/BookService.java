@@ -31,4 +31,19 @@ public class BookService {
     public void deleteBook(String id) {
         bookRepository.deleteById(id);
     }
+
+    // Búsqueda básica
+    public List<Book> searchBasic(String query) {
+        return bookRepository.findByTituloContainingIgnoreCaseOrAutorContainingIgnoreCase(query, query);
+    }
+
+    // Búsqueda avanzada
+    public List<Book> searchAdvanced(String titulo, String autor, String isbn) {
+        // Si algún parámetro es null, reemplazar por ""
+        return bookRepository.findByTituloContainingIgnoreCaseAndAutorContainingIgnoreCaseAndIsbnContainingIgnoreCase(
+                titulo != null ? titulo : "",
+                autor != null ? autor : "",
+                isbn != null ? isbn : ""
+        );
+    }
 }

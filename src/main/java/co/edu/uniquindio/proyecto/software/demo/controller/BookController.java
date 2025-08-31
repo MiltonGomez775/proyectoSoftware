@@ -21,6 +21,20 @@ public class BookController {
         return bookService.getAllBooks();
     }
 
+    @GetMapping("/search")
+    public List<Book> searchBasic(@RequestParam String query) {
+        return bookService.searchBasic(query);
+    }
+
+    @GetMapping("/advanced-search")
+    public List<Book> searchAdvanced(
+        @RequestParam(required = false) String titulo,
+        @RequestParam(required = false) String autor,
+        @RequestParam(required = false) String isbn
+    ) {
+        return bookService.searchAdvanced(titulo, autor, isbn);
+    }
+
     @PostMapping
     public Book createBook(@RequestBody Book book) {
         return bookService.createBook(book);

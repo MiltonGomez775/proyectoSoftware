@@ -41,4 +41,16 @@ public class ReviewController {
     public Review createReview(@RequestBody ReviewRequestDto dto) {
         return reviewService.createReview(dto);
     }
+
+    @PostMapping("/preview")
+    public Review previewReview(@RequestBody ReviewRequestDto dto) {
+        Review review = new Review(dto.getBookId(), dto.getComment(), dto.getRating());
+        return review;
+    }
+
+    // Obtener todas las reviews de un libro
+    @GetMapping("/book/{bookId}")
+        public List<Review> getReviewsByBook(@PathVariable String bookId) {
+        return reviewService.getReviewsForBook(bookId);
+    }
 }
